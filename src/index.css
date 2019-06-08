@@ -1,13 +1,48 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'Arcade';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./retro_computer_personal_use.ttf');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+a {
+  text-decoration: none;
+}
+.App {
+  font-family: Arcade;
+  color: white;
+}
+
+.Title {
+  text-align: center;
+  color: greenyellow;
+}
+
+.Screen {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+  border-color: white;
+  border-style: dotted;
+  border-width: 1px 1px 1px 1px;
+}
+
+.Footer {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  font-size: 0.8em;
+  color: lightgrey;
 }
