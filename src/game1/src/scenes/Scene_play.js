@@ -14,6 +14,9 @@ export default class Scene_Play extends Phaser.Scene {
     this.load.image('left', 'assets/left_pallete.png');
     this.load.image('right', 'assets/right_pallete.png');
     this.load.image('separator', 'assets/separator.png');
+    this.load.audio('hit1', 'assets/pong/hit1.ogg');
+    this.load.audio('hit2', 'assets/pong/hit2.ogg');
+    this.load.audio('point', 'assets/pong/point.ogg');
   }
   create() {
     let width = this.sys.game.config.width;
@@ -25,6 +28,10 @@ export default class Scene_Play extends Phaser.Scene {
     this.right = new Palletes(this, 620, center_heigth, 'right');
     this.separator = this.add.image(center_width, center_heigth, 'separator');
     this.ball = this.physics.add.image(center_width, center_heigth, 'ball');
+
+    this.hit1 = this.sound.add('hit1', {loop: false});
+    this.hit2 = this.sound.add('hit2', {loop: false});
+    this.point = this.sound.add('point', {loop: false});
 
     if (Phaser.Math.Between(-100, 100) > 0) {
       this.ball.setVelocityX(180);
@@ -39,14 +46,14 @@ export default class Scene_Play extends Phaser.Scene {
     this.physics.add.collider(
       this.ball,
       this.left,
-      this.hitPallete(this.left),
+      this.hitLeftPallete,
       null,
       this
     );
     this.physics.add.collider(
       this.ball,
       this.right,
-      this.hitPallete,
+      this.hitRightPallete,
       null,
       this
     );
@@ -63,6 +70,10 @@ export default class Scene_Play extends Phaser.Scene {
     this.cursor = this.input.keyboard.createCursorKeys();
 
     this.drawScoreboard();
+
+    //sound
+
+    
   }
   drawScoreboard() {
     const { left, right } = store.state;
@@ -81,6 +92,14 @@ export default class Scene_Play extends Phaser.Scene {
     this.leftController();
   }
 
+  playHitSound(which){
+    if(which === 1){
+      this.hit1.play();
+    }else{
+      this.hit2.play();
+    }
+  }
+
   scoreboard() {
     if (store.getState().left > 10 || store.getState().right > 10) {
       this.gameOver();
@@ -88,13 +107,14 @@ export default class Scene_Play extends Phaser.Scene {
       if (this.ball.x < 0) {
         console.log('punto para la derecha!!');
         store.update(s => s.right++);
-        console.log(store.getState());
+        this.point.play();
         this.drawScoreboard();
         this.resetBall('left');
       }
       if (this.ball.x > this.sys.game.config.width) {
         console.log('punto para la izquierda!!');
         store.update(s => s.left++);
+        this.point.play();
         this.drawScoreboard();
         this.resetBall('right');
       }
@@ -155,13 +175,26 @@ export default class Scene_Play extends Phaser.Scene {
     }
   }
 
-  hitPallete(which) {
-    if (this.ball.y > which.y) {
+  hitLeftPallete() {
+    this.playHitSound(1);
+    if (this.ball.y > this.left.body.y) {
       this.ball.setVelocityY(Phaser.Math.Between(0, 100));
     } else {
       this.ball.setVelocityY(Phaser.Math.Between(-100, 0));
     }
-    this.ball.body.setBounceX(this.ball.body.bounce.x + 0.05);
+
+    this.ball.body.setBounceX(this.ball.body.bounce.x + 0.02);    
+  }
+
+  hitRightPallete() {
+    this.playHitSound(2);
+    if (this.ball.y > this.right.body.y) {
+      this.ball.setVelocityY(Phaser.Math.Between(0, 100));
+    } else {
+      this.ball.setVelocityY(Phaser.Math.Between(-100, 0));
+    }
+    
+    this.ball.body.setBounceX(this.ball.body.bounce.x + 0.02);    
   }
 
   updateText() {}
