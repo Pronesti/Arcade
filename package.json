@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "phaser": "^3.17.0",
+    "pure-store": "^0.3.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-phaser": "^0.1.6",
