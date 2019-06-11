@@ -10,10 +10,10 @@ export default class Scene_Play extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('ball', 'assets/ball.png');
-    this.load.image('left', 'assets/left_pallete.png');
-    this.load.image('right', 'assets/right_pallete.png');
-    this.load.image('separator', 'assets/separator.png');
+    this.load.image('ball', 'assets/pong/ball.png');
+    this.load.image('left', 'assets/pong/left_pallete.png');
+    this.load.image('right', 'assets/pong/right_pallete.png');
+    this.load.image('separator', 'assets/pong/separator.png');
     this.load.audio('hit1', 'assets/pong/hit1.ogg');
     this.load.audio('hit2', 'assets/pong/hit2.ogg');
     this.load.audio('point', 'assets/pong/point.ogg');
@@ -29,9 +29,9 @@ export default class Scene_Play extends Phaser.Scene {
     this.separator = this.add.image(center_width, center_heigth, 'separator');
     this.ball = this.physics.add.image(center_width, center_heigth, 'ball');
 
-    this.hit1 = this.sound.add('hit1', {loop: false});
-    this.hit2 = this.sound.add('hit2', {loop: false});
-    this.point = this.sound.add('point', {loop: false});
+    this.hit1 = this.sound.add('hit1', { loop: false });
+    this.hit2 = this.sound.add('hit2', { loop: false });
+    this.point = this.sound.add('point', { loop: false });
 
     if (Phaser.Math.Between(-100, 100) > 0) {
       this.ball.setVelocityX(180);
@@ -70,16 +70,12 @@ export default class Scene_Play extends Phaser.Scene {
     this.cursor = this.input.keyboard.createCursorKeys();
 
     this.drawScoreboard();
-
-    //sound
-
-    
   }
   drawScoreboard() {
     const { left, right } = store.state;
     let width = this.sys.game.config.width;
     let center_width = width / 2;
-    this.add.text(center_width - 60, 100, `${left} - ${right}`, {
+    this.add.text(center_width - 60, 0, `${left} - ${right}`, {
       color: '#00ff00',
       backgroundColor: '#000000',
       fontSize: 40
@@ -92,10 +88,10 @@ export default class Scene_Play extends Phaser.Scene {
     this.leftController();
   }
 
-  playHitSound(which){
-    if(which === 1){
+  playHitSound(which) {
+    if (which === 1) {
       this.hit1.play();
-    }else{
+    } else {
       this.hit2.play();
     }
   }
@@ -183,7 +179,7 @@ export default class Scene_Play extends Phaser.Scene {
       this.ball.setVelocityY(Phaser.Math.Between(-100, 0));
     }
 
-    this.ball.body.setBounceX(this.ball.body.bounce.x + 0.02);    
+    this.ball.body.setBounceX(this.ball.body.bounce.x + 0.02);
   }
 
   hitRightPallete() {
@@ -193,9 +189,7 @@ export default class Scene_Play extends Phaser.Scene {
     } else {
       this.ball.setVelocityY(Phaser.Math.Between(-100, 0));
     }
-    
-    this.ball.body.setBounceX(this.ball.body.bounce.x + 0.02);    
-  }
 
-  updateText() {}
+    this.ball.body.setBounceX(this.ball.body.bounce.x + 0.02);
+  }
 }
