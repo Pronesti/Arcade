@@ -12,8 +12,8 @@ body {
   background-color: black;
 }
 
-a {
-  text-decoration: none;
+a, a:visited, a:hover, a:focus, a:active {
+  text-decoration: none !important;
 }
 .App {
   font-family: Arcade;
@@ -45,4 +45,16 @@ canvas {
   text-align: center;
   font-size: 0.8em;
   color: lightgrey;
+}
+.gameDiv{
+  display: inline-block;
+  margin: 10px;
+}
+
+.poster{
+  width: 200px;
+  border-radius: 100%;
+  border-color: white;
+  border:10px;
+  border-style: solid;
 }

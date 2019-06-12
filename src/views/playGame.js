@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import Game1 from '../game1/src';
 import Game2 from '../game2/src';
+import Game3 from '../game3/src';
 
 export default class PlayGame extends Component {
-
   render() {
-    console.log(this.props.store.getState())
+    console.log(this.props.store.getState());
     let game = this.props.store.getState().Game;
-    switch(game){
+    switch (game) {
       case 1:
-        return (<Game1 />);
+        return <Game1 />;
         break;
       case 2:
-        return (<Game2 />);
+        return <Game2 />;
+        break;
+      case 3:
+        return <Game3 />;
         break;
       default:
-        return (<p>404</p>);
+        return <p>404</p>;
         break;
     }
   }
