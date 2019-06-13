@@ -5,7 +5,7 @@ export default () => {
   return (
     <div>
      <p>Welcome to arcade, have fun!</p>
-      <Link to="/games"><button class="push--flat">PLAY</button></Link>
+      <Link to="/games"><button>PLAY</button></Link>
     </div>
   )
 }
