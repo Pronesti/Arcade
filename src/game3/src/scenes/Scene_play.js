@@ -24,6 +24,7 @@ export default class Scene_Play extends Phaser.Scene {
     this.lettersChoosen = [];
     this.secretWord = this.createSecretWord(this.randomWord);
     this.lives = 5;
+    this.failLetters = [];
   }
 
   preload() {
@@ -36,6 +37,7 @@ export default class Scene_Play extends Phaser.Scene {
       fontColor: 'white'
     });
     this.add.text(0,0, `vidas: ${this.lives}`, {fontSize: 40, fontColor: 'red', backgroundColor: 'black'});
+    this.add.text(0,280, `failed: ${this.failLetters.toString()}`,{fontSize: 20, fontColor: 'red', backgroundColor: 'black'});
 
     this.letterA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.letterB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
@@ -72,7 +74,7 @@ export default class Scene_Play extends Phaser.Scene {
   }
 
   chooseRandomWord(wordList) {
-    let number = Math.round(Math.random() * 10 + 0);
+    let number = Math.floor(Math.random() * (this.wordList.length - 1 +1)) + 1;
     let word = wordList[number];
     return word;
   }
@@ -160,8 +162,15 @@ export default class Scene_Play extends Phaser.Scene {
       this.secretWord[where] = letterToCheck;
       this.updateSecretWord();
     }else{
+      this.fail(letter);
       this.updateLives();
     }
+  }
+
+  fail(letter){
+    this.failLetters.push(letter);
+    this.add.text(0,280, `failed: ${this.failLetters.toString()}`,{fontSize: 20, fontColor: 'red', backgroundColor: 'black'});
+
   }
   updateSecretWord() {
     console.log(this);
