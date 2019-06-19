@@ -1,8 +1,7 @@
 import Phaser from 'phaser';
 import createStore from 'pure-store';
-import Player from '../gameObjects/Player';
 
-const store = createStore({ left: 4, right: 0 });
+const store = createStore({ left: 0, right: 0 });
 
 export default class Scene_Play extends Phaser.Scene {
   constructor() {
@@ -10,8 +9,8 @@ export default class Scene_Play extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('playerLeft', 'assets/soccer/jugador1izq.png');
-    this.load.image('playerRight', 'assets/soccer/jugador1der.png');
+    this.load.image('playerRight', 'assets/soccer/jugador1izq.png');
+    this.load.image('playerLeft', 'assets/soccer/jugador1der.png');
     this.load.image('ball', 'assets/soccer/ball.png');
     this.load.image('background', 'assets/soccer/background.jpg');
     this.load.audio('goal','assets/soccer/goal.mp3');
@@ -25,15 +24,24 @@ export default class Scene_Play extends Phaser.Scene {
     this.background = this.add.image(0,0,'background');
     this.background.displayHeight = 600;
     this.background.displayWidth = 1600;
-    this.playerLeft = new Player(this, 750, 300, 'playerLeft');
-    this.playerRight =new Player(this, 50, 300, 'playerRight');
+
+    this.playerLeft = this.physics.add.sprite(50, 750, 'playerLeft');
+    this.playerRight = this.physics.add.sprite(750, 750, 'playerRight');
+
     this.ball = this.physics.add.image( 200, 100, 'ball');
+    this.ball.setCircle(46);
+
+    this.playerLeft.setBounce(0.2);
+    this.playerLeft.setCollideWorldBounds(true);
+    this.playerRight.setBounce(0.2);
+    this.playerRight.setCollideWorldBounds(true);
 
 
         //Physics
-        this.ball.setBounce(0.5);
+        this.ball.setBounce(1);
         this.ball.setCollideWorldBounds(true);
         this.physics.world.setBoundsCollision(false, false, true, true);
+        this.physics.world.gravity.y = 1000;
         this.physics.add.collider(
           this.ball,
           this.playerLeft,
@@ -55,9 +63,6 @@ export default class Scene_Play extends Phaser.Scene {
           null,
           this
         );
-        this.ball.setGravityY(100);
-        this.playerLeft.body.setGravityY(300);
-        this.playerRight.body.setGravityY(300);
 
        //LeftPlayer
        this.cursor_W = this.input.keyboard.addKey(
@@ -137,8 +142,8 @@ export default class Scene_Play extends Phaser.Scene {
       this.sys.game.config.width / 2,
       this.sys.game.config.height / 2
     );
-    this.playerLeft.setPosition(750, 300);
-    this.playerRight.setPosition(20, 300);
+    this.playerLeft.setPosition(50, 300);
+    this.playerRight.setPosition(750, 300);
     this.ball.body.setBounceX(1);
     this.ball.body.setVelocityX(200);
     if (direction !== 'left') {
@@ -152,9 +157,10 @@ export default class Scene_Play extends Phaser.Scene {
 
   rightController() {
     //Controller Right
-    if (this.cursor.down.isDown) {
+  if (this.cursor.down.isDown) {
       this.playerRight.body.setVelocityY(300);
-    } else if (this.cursor.up.isDown) {
+    } else if (this.cursor.up.isDown && this.playerRight.body.y > 200) {
+      this.playerRight.body.setAccelerationY(5000);
       this.playerRight.body.setVelocityY(-300);
     } else if(this.cursor.left.isDown){
       this.playerRight.body.setVelocityX(-300);
@@ -170,8 +176,10 @@ export default class Scene_Play extends Phaser.Scene {
     //Controller left
     if (this.cursor_S.isDown) {
       this.playerLeft.body.setVelocityY(300);
-    } else if (this.cursor_W.isDown) {
-      this.playerLeft.body.setVelocityY(-300);
+    } else if (this.cursor_W.isDown && this.playerLeft.body.y > 200) {
+      this.playerLeft.body.setVelocityY(-500);
+      this.playerLeft.body.setAccelerationY(5000);
+
     } else if(this.cursor_A.isDown){
       this.playerLeft.body.setVelocityX(-300);
     }else if(this.cursor_D.isDown){
@@ -183,11 +191,11 @@ export default class Scene_Play extends Phaser.Scene {
   }
 
   hitRightPlayer(){
-    this.ball.setVelocityY(300);
-    this.ball.setVelocityX(120);
+   /*  this.ball.setVelocityY(300);
+    this.ball.setVelocityX(120); */
   }
   hitLeftPlayer(){
-    this.ball.setVelocityY(300);
-    this.ball.setVelocityX(-120);
+/*     this.ball.setVelocityY(300);
+    this.ball.setVelocityX(-120); */
   }
 }
