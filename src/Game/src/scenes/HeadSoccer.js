@@ -6,6 +6,7 @@ const store = createStore({ left: 0, right: 0 });
 export default class HeadSoccer extends Phaser.Scene {
   constructor() {
     super({ key: 'HeadSoccer' });
+    this.scoreHub = {};
   }
 
   preload() {
@@ -24,6 +25,7 @@ export default class HeadSoccer extends Phaser.Scene {
     this.background = this.add.image(0,0,'background');
     this.background.displayHeight = 600;
     this.background.displayWidth = 1600;
+    this.createScore();
 
     this.playerLeft = this.physics.add.sprite(50, 750, 'playerLeft');
     this.playerRight = this.physics.add.sprite(750, 750, 'playerRight');
@@ -90,16 +92,20 @@ export default class HeadSoccer extends Phaser.Scene {
     this.rightController();
     this.leftController();
   }
-
-  drawScoreboard() {
+  createScore(){
     const { left, right } = store.state;
     let width = this.sys.game.config.width;
     let center_width = width / 2;
-    this.add.text(center_width - 60, 0, `${left} - ${right}`, {
+    this.scoreHub = this.add.text(center_width - 60, 0, `${left} - ${right}`, {
       color: '#00ff00',
       backgroundColor: '#000000',
       fontSize: 40
     });
+  }
+
+  drawScoreboard() {
+    const { left, right } = store.state;
+    this.scoreHub.setText(`${left} - ${right}`);
   }
 
   scoreboard() {

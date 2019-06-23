@@ -39,7 +39,7 @@ export default class HangMan extends Phaser.Scene {
     });
     this.createLives();
 
-    this.failHUD = this.add.text(0,280, `failed: ${this.failLetters.toString()}`,{fontSize: 20, fontColor: 'red', backgroundColor: 'black'});
+    this.failHUD = this.add.text(0,250, `failed: ${this.failLetters.toString()}`,{fontSize: 30, fill: 'red'});
 
     this.letterA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.letterB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
@@ -190,7 +190,7 @@ export default class HangMan extends Phaser.Scene {
 
   fail(letter){
     this.failLetters.push(letter);
-    this.failHUD = this.add.text(0,280, `failed: ${this.failLetters.toString()}`,{fontSize: 20, fontColor: 'red', backgroundColor: 'black'});
+    this.failHUD.setText(`failed: ${this.failLetters.toString()}`);
 
   }
   updateSecretWord() {

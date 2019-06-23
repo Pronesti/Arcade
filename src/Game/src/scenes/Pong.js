@@ -7,6 +7,7 @@ const store = createStore({ left: 0, right: 0 });
 export default class Pong extends Phaser.Scene {
   constructor() {
     super({ key: 'Pong' });
+    this.scoreHub = {};
   }
 
   preload() {
@@ -23,6 +24,8 @@ export default class Pong extends Phaser.Scene {
     let height = this.sys.game.config.height;
     let center_width = width / 2;
     let center_heigth = height / 2;
+
+    this.createScore()
 
     this.left = new Palletes(this, 20, center_heigth, 'left');
     this.right = new Palletes(this, 620, center_heigth, 'right');
@@ -71,15 +74,19 @@ export default class Pong extends Phaser.Scene {
 
     this.drawScoreboard();
   }
-  drawScoreboard() {
+
+  createScore(){
     const { left, right } = store.state;
     let width = this.sys.game.config.width;
     let center_width = width / 2;
-    this.add.text(center_width - 60, 0, `${left} - ${right}`, {
+    this.scoreHub = this.add.text(center_width - 60, 0, `${left} - ${right}`, {
       color: '#00ff00',
-      backgroundColor: '#000000',
       fontSize: 40
     });
+  }
+  drawScoreboard() {
+    const { left, right } = store.state;
+    this.scoreHub.setText(`${left} - ${right}`);
   }
 
   update() {
