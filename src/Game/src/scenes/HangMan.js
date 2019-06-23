@@ -23,11 +23,12 @@ export default class HangMan extends Phaser.Scene {
     this.lettersChoosen = [];
     this.secretWord = this.createSecretWord(this.randomWord);
     this.lives = 5;
+    this.livesHUD = {};
     this.failLetters = [];
   }
 
   preload() {
-
+    this.load.image('hearth', 'assets/HangMan/corazon.png');
   }
 
   create() {
@@ -35,7 +36,8 @@ export default class HangMan extends Phaser.Scene {
       fontSize: 40,
       fontColor: 'white'
     });
-    this.add.text(0,0, `vidas: ${this.lives}`, {fontSize: 40, fontColor: 'red', backgroundColor: 'black'});
+    this.createLives();
+
     this.add.text(0,280, `failed: ${this.failLetters.toString()}`,{fontSize: 20, fontColor: 'red', backgroundColor: 'black'});
 
     this.letterA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -70,6 +72,25 @@ export default class HangMan extends Phaser.Scene {
   update() {
     this.listenKeys();
     this.checkFinished();
+  }
+
+  createLives(){
+
+    this.livesHUD = this.add.group();   
+
+    for (var row=0; row>=0; row--) {
+      for (var i=this.lives - 1; i>=0; i--) {
+          var icon = this.livesHUD.create(
+              25 + ((32 + 2) * i),
+              25 + ((32 + 2) * row),
+              'hearth'
+          );
+          //icon.anchor.setTo(0, 0);
+           icon.setScale(0.1); // improve this so we actually scale to width?
+          icon.width = 10;
+          icon.height = 10;
+      }
+  }
   }
 
   chooseRandomWord(wordList) {
@@ -199,6 +220,12 @@ export default class HangMan extends Phaser.Scene {
 
   updateLives(){
     this.lives = this.lives - 1;
-    this.add.text(0,0, `vidas: ${this.lives}`, {fontSize: 40, fontColor: 'red', backgroundColor: 'black'})
+    var vidas = this.livesHUD.getChildren();
+    var vida = Phaser.Utils.Array.RemoveAt(vidas, 0);
+    if (vida)
+        {
+            vida.destroy();
+        }
+   // this.add.text(0,0, `vidas: ${this.lives}`, {fontSize: 40, fontColor: 'red', backgroundColor: 'black'})
   }
 }
