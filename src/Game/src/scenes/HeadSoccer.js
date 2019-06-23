@@ -31,13 +31,16 @@ export default class HeadSoccer extends Phaser.Scene {
     this.playerRight = this.physics.add.sprite(750, 750, 'playerRight');
 
     this.ball = this.physics.add.image( 200, 100, 'ball');
-    this.ball.setCircle(46);
+    
+
+    this.ball.setCircle(15);
 
     this.playerLeft.setBounce(0.2);
     this.playerLeft.setCollideWorldBounds(true);
     this.playerRight.setBounce(0.2);
     this.playerRight.setCollideWorldBounds(true);
-
+    this.playerLeft.setCircle(40);
+    this.playerRight.setCircle(40);
 
         //Physics
         this.ball.setBounce(1);

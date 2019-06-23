@@ -15,7 +15,8 @@ export default class Game extends PureComponent {
             height: 300,
             parent: "phaser-container",
             physics: {
-                default: "arcade"
+                default: "arcade",
+                arcade: {debug: false}
             },
             scene: [
               ChooseGame,Pong,HeadSoccer,HangMan
