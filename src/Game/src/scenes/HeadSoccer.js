@@ -3,18 +3,18 @@ import createStore from 'pure-store';
 
 const store = createStore({ left: 0, right: 0 });
 
-export default class Scene_Play extends Phaser.Scene {
+export default class HeadSoccer extends Phaser.Scene {
   constructor() {
-    super({ key: 'Scene_Play' });
+    super({ key: 'HeadSoccer' });
   }
 
   preload() {
-    this.load.image('playerRight', 'assets/soccer/jugador1izq.png');
-    this.load.image('playerLeft', 'assets/soccer/jugador1der.png');
-    this.load.image('ball', 'assets/soccer/ball.png');
-    this.load.image('background', 'assets/soccer/background.jpg');
-    this.load.audio('goal','assets/soccer/goal.mp3');
-    this.load.audio('endgame','assets/soccer/endgame.wav');
+    this.load.image('playerRight', 'assets/HeadSoccer/jugador1izq.png');
+    this.load.image('playerLeft', 'assets/HeadSoccer/jugador1der.png');
+    this.load.image('ball', 'assets/HeadSoccer/ball.png');
+    this.load.image('background', 'assets/HeadSoccer/background.jpg');
+    this.load.audio('goal','assets/HeadSoccer/goal.mp3');
+    this.load.audio('endgame','assets/HeadSoccer/endgame.wav');
   }
 
   create() {

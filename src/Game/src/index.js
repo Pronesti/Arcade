@@ -1,9 +1,13 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-import Scene_play from './scenes/Scene_play'
+import Pong from './scenes/Pong'
+import HeadSoccer from './scenes/HeadSoccer'
+import HangMan from './scenes/HangMan'
+import ChooseGame from './scenes/ChooseGame'
+
 import Phaser from 'phaser'
 
-export default class Game3 extends Component {
+export default class Game extends PureComponent {
     componentDidMount() {
 
         const config = {
@@ -14,10 +18,9 @@ export default class Game3 extends Component {
                 default: "arcade"
             },
             scene: [
-              Scene_play
+              ChooseGame,Pong,HeadSoccer,HangMan
             ]
         }
-
         this.game = new Phaser.Game(config);
     }
     
@@ -36,4 +39,8 @@ export default class Game3 extends Component {
 			</div>
     )
   }
+
+  componentWillUnmount(){
+    this.game.destroy(true,false); //el primero elimina el canvas, el 2do lo descarga en memoria
+    }
 }

@@ -1,12 +1,11 @@
 import Phaser from 'phaser';
 import createStore from 'pure-store';
-import Player from '../gameObjects/Player';
 
 const store = createStore({});
 
-export default class Scene_Play extends Phaser.Scene {
+export default class HangMan extends Phaser.Scene {
   constructor() {
-    super({ key: 'Scene_Play' });
+    super({ key: 'HangMan' });
     this.wordList = [
       'elefante',
       'autopista',

@@ -4,9 +4,9 @@ import createStore from 'pure-store';
 
 const store = createStore({ left: 0, right: 0 });
 
-export default class Scene_Play extends Phaser.Scene {
+export default class Pong extends Phaser.Scene {
   constructor() {
-    super({ key: 'Scene_Play' });
+    super({ key: 'Pong' });
   }
 
   preload() {

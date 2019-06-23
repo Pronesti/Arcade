@@ -23,8 +23,7 @@ function App() {
           <div>
             <Header />
             <Route exact path='/' component={Home} />
-            <Route exact path='/playgame/' render={(props) => <PlayGame {...props} store={globalStore} />} />
-            <Route exact path='/games/' render={(props) => <GameSelection {...props} store={globalStore} />} />
+            <Route exact path='/games/' render={(props) => <PlayGame {...props} store={globalStore} />} />
             <Footer />
           </div>
         </Router>
