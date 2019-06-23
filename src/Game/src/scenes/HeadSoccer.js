@@ -14,15 +14,14 @@ export default class HeadSoccer extends Phaser.Scene {
     this.load.image('playerLeft', 'assets/HeadSoccer/jugador1der.png');
     this.load.image('ball', 'assets/HeadSoccer/ball.png');
     this.load.image('background', 'assets/HeadSoccer/background.jpg');
-    this.load.audio('goal','assets/HeadSoccer/goal.mp3');
-    this.load.audio('endgame','assets/HeadSoccer/endgame.wav');
+    this.load.audio('goal', 'assets/HeadSoccer/goal.mp3');
+    this.load.audio('endgame', 'assets/HeadSoccer/endgame.wav');
   }
 
   create() {
-
-    this.goal = this.sound.add('goal', {loop: false});
-    this.endgame = this.sound.add('endgame', {loop: false});
-    this.background = this.add.image(0,0,'background');
+    this.goal = this.sound.add('goal', { loop: false });
+    this.endgame = this.sound.add('endgame', { loop: false });
+    this.background = this.add.image(0, 0, 'background');
     this.background.displayHeight = 600;
     this.background.displayWidth = 1600;
     this.createScore();
@@ -30,8 +29,7 @@ export default class HeadSoccer extends Phaser.Scene {
     this.playerLeft = this.physics.add.sprite(50, 750, 'playerLeft');
     this.playerRight = this.physics.add.sprite(750, 750, 'playerRight');
 
-    this.ball = this.physics.add.image( 200, 100, 'ball');
-    
+    this.ball = this.physics.add.image(200, 100, 'ball');
 
     this.ball.setCircle(15);
 
@@ -42,52 +40,49 @@ export default class HeadSoccer extends Phaser.Scene {
     this.playerLeft.setCircle(40);
     this.playerRight.setCircle(40);
 
-        //Physics
-        this.ball.setBounce(1);
-        this.ball.setCollideWorldBounds(true);
-        this.physics.world.setBoundsCollision(false, false, true, true);
-        this.physics.world.gravity.y = 1000;
-        this.physics.add.collider(
-          this.ball,
-          this.playerLeft,
-          this.hitLeftPlayer,
-          null,
-          this
-        );
-        this.physics.add.collider(
-          this.ball,
-          this.playerRight,
-          this.hitRightPlayer,
-          null,
-          this
-        );
-        this.physics.add.collider(
-          this.playerLeft,
-          this.playerRight,
-          this.hitTwoPlayer,
-          null,
-          this
-        );
+    //Physics
+    this.ball.setBounce(1);
+    this.ball.setCollideWorldBounds(true);
+    this.physics.world.setBoundsCollision(false, false, true, true);
+    this.physics.world.gravity.y = 1000;
+    this.physics.add.collider(
+      this.ball,
+      this.playerLeft,
+      this.hitLeftPlayer,
+      null,
+      this
+    );
+    this.physics.add.collider(
+      this.ball,
+      this.playerRight,
+      this.hitRightPlayer,
+      null,
+      this
+    );
+    this.physics.add.collider(
+      this.playerLeft,
+      this.playerRight,
+      this.hitTwoPlayer,
+      null,
+      this
+    );
 
-       //LeftPlayer
-       this.cursor_W = this.input.keyboard.addKey(
-        Phaser.Input.Keyboard.KeyCodes.W
-      );
-      this.cursor_S = this.input.keyboard.addKey(
-        Phaser.Input.Keyboard.KeyCodes.S
-      );
-      this.cursor_A = this.input.keyboard.addKey(
-        Phaser.Input.Keyboard.KeyCodes.A
-      );
-      this.cursor_D = this.input.keyboard.addKey(
-        Phaser.Input.Keyboard.KeyCodes.D
-      );
-  
-      // RightPlayer
-      this.cursor = this.input.keyboard.createCursorKeys();
+    //LeftPlayer
+    this.cursor_W = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.W
+    );
+    this.cursor_S = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.S
+    );
+    this.cursor_A = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.A
+    );
+    this.cursor_D = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.D
+    );
 
-      
-  
+    // RightPlayer
+    this.cursor = this.input.keyboard.createCursorKeys();
   }
 
   update() {
@@ -95,7 +90,7 @@ export default class HeadSoccer extends Phaser.Scene {
     this.rightController();
     this.leftController();
   }
-  createScore(){
+  createScore() {
     const { left, right } = store.state;
     let width = this.sys.game.config.width;
     let center_width = width / 2;
@@ -166,16 +161,16 @@ export default class HeadSoccer extends Phaser.Scene {
 
   rightController() {
     //Controller Right
-  if (this.cursor.down.isDown) {
+    if (this.cursor.down.isDown) {
       this.playerRight.body.setVelocityY(300);
     } else if (this.cursor.up.isDown && this.playerRight.body.y > 200) {
       this.playerRight.body.setAccelerationY(5000);
       this.playerRight.body.setVelocityY(-300);
-    } else if(this.cursor.left.isDown){
+    } else if (this.cursor.left.isDown) {
       this.playerRight.body.setVelocityX(-300);
-    }else if(this.cursor.right.isDown){
+    } else if (this.cursor.right.isDown) {
       this.playerRight.body.setVelocityX(300);
-    }else{
+    } else {
       this.playerRight.body.setVelocityY(0);
       this.playerRight.body.setVelocityX(0);
     }
@@ -188,23 +183,22 @@ export default class HeadSoccer extends Phaser.Scene {
     } else if (this.cursor_W.isDown && this.playerLeft.body.y > 200) {
       this.playerLeft.body.setVelocityY(-500);
       this.playerLeft.body.setAccelerationY(5000);
-
-    } else if(this.cursor_A.isDown){
+    } else if (this.cursor_A.isDown) {
       this.playerLeft.body.setVelocityX(-300);
-    }else if(this.cursor_D.isDown){
+    } else if (this.cursor_D.isDown) {
       this.playerLeft.body.setVelocityX(300);
-    }else{
+    } else {
       this.playerLeft.body.setVelocityY(0);
       this.playerLeft.body.setVelocityX(0);
     }
   }
 
-  hitRightPlayer(){
-   /*  this.ball.setVelocityY(300);
+  hitRightPlayer() {
+    /*  this.ball.setVelocityY(300);
     this.ball.setVelocityX(120); */
   }
-  hitLeftPlayer(){
-/*     this.ball.setVelocityY(300);
+  hitLeftPlayer() {
+    /*     this.ball.setVelocityY(300);
     this.ball.setVelocityX(-120); */
   }
 }

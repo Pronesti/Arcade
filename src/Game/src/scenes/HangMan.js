@@ -1,7 +1,4 @@
 import Phaser from 'phaser';
-import createStore from 'pure-store';
-
-const store = createStore({});
 
 export default class HangMan extends Phaser.Scene {
   constructor() {
@@ -39,7 +36,12 @@ export default class HangMan extends Phaser.Scene {
     });
     this.createLives();
 
-    this.failHUD = this.add.text(0,250, `failed: ${this.failLetters.toString()}`,{fontSize: 30, fill: 'red'});
+    this.failHUD = this.add.text(
+      0,
+      250,
+      `failed: ${this.failLetters.toString()}`,
+      { fontSize: 30, fill: 'red' }
+    );
 
     this.letterA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.letterB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
@@ -75,27 +77,26 @@ export default class HangMan extends Phaser.Scene {
     this.checkFinished();
   }
 
-  createLives(){
+  createLives() {
+    this.livesHUD = this.add.group();
 
-    this.livesHUD = this.add.group();   
-
-    for (var row=0; row>=0; row--) {
-      for (var i=this.lives - 1; i>=0; i--) {
-          var icon = this.livesHUD.create(
-              25 + ((32 + 2) * i),
-              25 + ((32 + 2) * row),
-              'hearth'
-          );
-          //icon.anchor.setTo(0, 0);
-           icon.setScale(0.1); // improve this so we actually scale to width?
-          icon.width = 10;
-          icon.height = 10;
+    for (var row = 0; row >= 0; row--) {
+      for (var i = this.lives - 1; i >= 0; i--) {
+        var icon = this.livesHUD.create(
+          25 + (32 + 2) * i,
+          25 + (32 + 2) * row,
+          'hearth'
+        );
+        //icon.anchor.setTo(0, 0);
+        icon.setScale(0.1); // improve this so we actually scale to width?
+        icon.width = 10;
+        icon.height = 10;
       }
-  }
+    }
   }
 
   chooseRandomWord(wordList) {
-    let number = Math.floor(Math.random() * (this.wordList.length - 1 +1)) + 1;
+    let number = Math.floor(Math.random() * (this.wordList.length - 1 + 1)) + 1;
     let word = wordList[number];
     return word;
   }
@@ -182,16 +183,15 @@ export default class HangMan extends Phaser.Scene {
       where = this.randomWord.lastIndexOf(letterToCheck);
       this.secretWord[where] = letterToCheck;
       this.updateSecretWord();
-    }else{
+    } else {
       this.fail(letter);
       this.updateLives();
     }
   }
 
-  fail(letter){
+  fail(letter) {
     this.failLetters.push(letter);
     this.failHUD.setText(`failed: ${this.failLetters.toString()}`);
-
   }
   updateSecretWord() {
     console.log(this);
@@ -202,16 +202,16 @@ export default class HangMan extends Phaser.Scene {
     });
   }
 
-  checkFinished(){
-    if(this.lives <= 0){
-      this.add.text(10, 65, "PERDISTE", {
+  checkFinished() {
+    if (this.lives <= 0) {
+      this.add.text(10, 65, 'PERDISTE', {
         fontSize: 160,
         fontColor: 'white',
         backgroundColor: 'black'
       });
     }
-    if(this.randomWord === this.secretWord.join('')){
-      this.add.text(20, 65, "GANASTE", {
+    if (this.randomWord === this.secretWord.join('')) {
+      this.add.text(20, 65, 'GANASTE', {
         fontSize: 180,
         fontColor: 'white',
         backgroundColor: 'black'
@@ -219,14 +219,13 @@ export default class HangMan extends Phaser.Scene {
     }
   }
 
-  updateLives(){
+  updateLives() {
     this.lives = this.lives - 1;
     var vidas = this.livesHUD.getChildren();
     var vida = Phaser.Utils.Array.RemoveAt(vidas, 0);
-    if (vida)
-        {
-            vida.destroy();
-        }
-   // this.add.text(0,0, `vidas: ${this.lives}`, {fontSize: 40, fontColor: 'red', backgroundColor: 'black'})
+    if (vida) {
+      vida.destroy();
+    }
+    // this.add.text(0,0, `vidas: ${this.lives}`, {fontSize: 40, fontColor: 'red', backgroundColor: 'black'})
   }
 }

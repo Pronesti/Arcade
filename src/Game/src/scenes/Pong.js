@@ -25,7 +25,7 @@ export default class Pong extends Phaser.Scene {
     let center_width = width / 2;
     let center_heigth = height / 2;
 
-    this.createScore()
+    this.createScore();
 
     this.left = new Palletes(this, 20, center_heigth, 'left');
     this.right = new Palletes(this, 620, center_heigth, 'right');
@@ -75,7 +75,7 @@ export default class Pong extends Phaser.Scene {
     this.drawScoreboard();
   }
 
-  createScore(){
+  createScore() {
     const { left, right } = store.state;
     let width = this.sys.game.config.width;
     let center_width = width / 2;
