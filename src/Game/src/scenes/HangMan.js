@@ -204,7 +204,7 @@ export default class HangMan extends Phaser.Scene {
 
   checkFinished() {
     if (this.lives <= 0) {
-      this.add.text(10, 65, 'PERDISTE', {
+      this.add.text(10, 65, 'Game over', {
         fontSize: 160,
         fontColor: 'white',
         backgroundColor: 'black'
